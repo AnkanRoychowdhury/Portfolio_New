@@ -1,74 +1,111 @@
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { experiences } from '../data/content';
-import { Briefcase } from 'lucide-react';
+import React from "react";
 
-gsap.registerPlugin(ScrollTrigger);
+const experienceData = [
+  {
+    id: 1,
+    position: "Senior Backend Developer",
+    company: "Tech Giant Corp",
+    duration: "2021 - Present",
+    current: true,
+    description: "Led backend development for high-scale distributed systems serving millions of users.",
+    responsibilities: [
+      "Architected and implemented microservices handling 1M+ daily transactions",
+      "Reduced system latency by 40% through optimization and caching strategies",
+      "Led team of 5 backend developers and implemented CI/CD pipelines",
+    ],
+    skills: ["Java", "Spring Boot", "Kubernetes", "AWS"],
+    color: "bg-green-100 text-green-600",  
+  },
+  {
+    id: 2,
+    position: "Backend Developer",
+    company: "Innovation Studios",
+    duration: "2019 - 2021",
+    current: false,
+    description: "Developed and maintained scalable backend services for e-commerce platforms.",
+    responsibilities: [
+      "Built RESTful APIs serving 500K+ daily active users",
+      "Implemented real-time inventory management system",
+      "Optimized database queries resulting in 50% faster response times",
+    ],
+    skills: ["Python", "Django", "PostgreSQL", "Redis"],
+    color: "bg-blue-100 text-blue-600",  
+  },
+  {
+    id: 3,
+    position: "Junior Backend Developer",
+    company: "Tech Startups Inc",
+    duration: "2018 - 2019",
+    current: false,
+    description: "Contributed to development of backend services for SaaS products.",
+    responsibilities: [
+      "Developed and maintained RESTful APIs using Node.js",
+      "Implemented authentication and authorization systems",
+      "Wrote comprehensive API documentation and unit tests",
+    ],
+    skills: ["Node.js", "Express", "MongoDB", "Docker"],
+    color: "bg-purple-100 text-purple-600",  
+  },
+];
 
-export default function Timeline() {
-  const timelineRef = useRef(null);
-
-  useEffect(() => {
-    const elements = timelineRef.current.querySelectorAll('.timeline-item');
-
-    elements.forEach((item, index) => {
-      gsap.fromTo(
-        item,
-        {
-          opacity: 0,
-          x: index % 2 === 0 ? -100 : 100,
-        },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 80%',
-            end: 'top 60%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-    });
-  }, []);
-
+const Experience: React.FC = () => {
   return (
-    <section id="experience" className="py-20 bg-gray-900">
-      <div className="container mx-auto px-6 relative">
-        <h2 className="text-3xl font-bold text-white mb-12 text-center">
-          Experience Timeline
-        </h2>
+    <section id="experience" className="px-6 py-12 bg-white dark:bg-neutral-900">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-4">Professional Experience</h2>
+          <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+            Building and scaling backend systems across various industries
+          </p>
+        </div>
 
-        <div ref={timelineRef} className="relative">
-          {/* Vertical Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-500/20" />
-
-          {experiences.map((exp, index) => (
+        <div className="space-y-8">
+          {experienceData.map((job) => (
             <div
-              key={exp.id}
-              className={`timeline-item relative flex items-center ${
-                index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
-              } gap-8 mb-12`}
+              key={job.id}
+              className="border border-neutral-200/30 rounded-xl p-6 bg-white dark:bg-neutral-800 shadow-xl"
             >
-              <div className="w-full md:w-5/12">
-                <div className="p-6 bg-gray-800 rounded-lg shadow-lg">
-                  <div className="flex items-center mb-4">
-                    <Briefcase className="text-blue-500 mr-3" size={20} />
-                    <h3 className="text-xl font-semibold text-white">{exp.role}</h3>
-                  </div>
-                  <p className="text-blue-400 mb-2">{exp.company}</p>
-                  <p className="text-gray-400 mb-4">{exp.duration}</p>
-                  <ul className="space-y-2">
-                    {exp.description.map((desc, i) => (
-                      <li key={i} className="text-gray-300 flex items-center">
-                        <span className="w-2 h-2 bg-blue-500 rounded-full mr-3" />
-                        {desc}
-                      </li>
-                    ))}
-                  </ul>
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-semibold text-neutral-900 dark:text-white">{job.position}</h3>
+                  <p className="text-neutral-600 dark:text-neutral-400 font-semibold text-lg">{job.company}</p>
+                </div>
+                <div className="mt-2 md:mt-0">
+                  <span className="text-neutral-500 dark:text-neutral-400">{job.duration}</span>
+                  {job.current && (
+                    <span className="ml-2 px-3 py-1 bg-green-100 dark:bg-green-700 text-green-800 dark:text-green-300 rounded-full text-sm">
+                      Current
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="space-y-4">
+                <p className="text-neutral-600 dark:text-neutral-400">{job.description}</p>
+                <ul className="space-y-2">
+                  {job.responsibilities.map((responsibility, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="text-neutral-800 dark:text-neutral-300 mr-2">•</span>
+                      <span className="text-neutral-600 dark:text-neutral-400">{responsibility}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-wrap gap-2 pt-4">
+                  {job.skills.map((skill, index) => (
+                    <span
+                      key={index}
+                      className={`px-3 py-1 bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-300 rounded-full text-sm ${
+                        index % 4 === 0
+                          ? "bg-emerald-100 dark:bg-emerald-900 text-emerald-600"
+                          : index % 4 === 1
+                          ? "bg-blue-100 dark:bg-blue-700 text-blue-600"
+                          : index % 4 === 2
+                          ? "bg-purple-100 dark:bg-purple-700 text-purple-600"
+                          : "bg-orange-100 dark:bg-orange-700 text-orange-600"
+                      }`}
+                    >
+                      {skill}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -77,4 +114,6 @@ export default function Timeline() {
       </div>
     </section>
   );
-}
+};
+
+export default Experience;

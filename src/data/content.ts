@@ -7,7 +7,7 @@ export const developer: Developer = {
   bio: "Crafting robust and scalable backend solutions with a passion for clean code and performance optimization.",
   // image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400",
   image: picOfMe,
-  skills: ["Node.js", "Python", "Go", "Microservices", "AWS", "Docker", "Kubernetes"],
+  skills: ["Node.js", "Java" , "Microservices", "AWS", "Docker"],
   socialLinks: {
     github: "https://github.com/yourusername",
     linkedin: "https://linkedin.com/in/yourusername",
